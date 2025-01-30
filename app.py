@@ -17,10 +17,12 @@ client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 collection = db[COLLECTION_NAME]
 
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Input Data", "View & Edit Data"])
+def show_sidebar():
+    st.sidebar.title("Navigation")
+    page = st.sidebar.radio("Go to", ["Input Data", "View & Edit Data"])
+    return page
 
-if page == "Input Data":
+def show_input_data():
     st.title("Streamlit MongoDB Example")
     
     # User input fields
@@ -40,7 +42,7 @@ if page == "Input Data":
         result = collection.insert_one(user_data)
         st.success(f"Data saved successfully! ID: {result.inserted_id}")
 
-elif page == "View & Edit Data":
+def show_view_and_edit_data():
     st.title("View & Edit Records")
     
     documents = list(collection.find())
@@ -62,4 +64,12 @@ elif page == "View & Edit Data":
                         "is_subscribed": new_is_subscribed
                     }})
                     st.success("Record updated successfully!")
+
+page = show_sidebar()
+
+if page == "Input Data":
+    show_input_data()
+
+elif page == "View & Edit Data":
+    show_view_and_edit_data()
 
