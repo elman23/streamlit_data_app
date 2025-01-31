@@ -20,19 +20,17 @@ class ViewAndEdit:
             st.warning("No records found.")
         else:
             for doc in documents:
-                with st.expander(f"{doc['name']} (ID: {doc['_id']})"):
+                with st.expander(f"ID: {doc['_id']})"):
                     new_doc = {}
                     new_doc['_id'] = doc['_id']
                     new_doc['name'] = st.text_input("Edit Name", doc['name'], key=f"name_{doc['_id']}")
                     new_doc['age'] = st.number_input("Edit Age", min_value=0, max_value=120, step=1, value=doc['age'], key=f"age_{doc['_id']}")
                     new_doc['birth_date'] = st.date_input("Edit Birth Date", datetime.strptime(doc['birth_date'], "%Y-%m-%d"), key=f"birth_{doc['_id']}")
                     new_doc['is_subscribed'] = st.checkbox("Subscribed?", doc['is_subscribed'], key=f"sub_{doc['_id']}")
-                    #self.docs_to_update.append(new_doc)
                     if st.button("Update", key=f"update_{doc['_id']}"):
                         self.save(new_doc)
 
     def save(self, doc):
-        #for doc in self.docs_to_update:
         self.collection.update_one({"_id": doc["_id"]}, {"$set": {
             "name": doc['name'],
             "age": doc['age'],

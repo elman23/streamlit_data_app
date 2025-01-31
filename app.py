@@ -8,18 +8,11 @@ from dotenv import load_dotenv
 from sidebar import Sidebar
 from view_and_edit import ViewAndEdit
 from input_data import InputData
-
+from mongo_db_client import MongoDbClient
 
 def main():
-    load_dotenv()
-
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://admin:adminpass@localhost:27017/")
-    DB_NAME = os.getenv("DB_NAME", "streamlit_db")
-    COLLECTION_NAME = os.getenv("COLLECTION_NAME", "user_inputs")
-
-    client = MongoClient(MONGO_URI)
-    db = client[DB_NAME]
-    collection = db[COLLECTION_NAME]
+    mongo_db_client = MongoDbClient()
+    collection = mongo_db_client.get_collection()
 
     view_and_edit = ViewAndEdit(collection)
     input_data = InputData(collection)
