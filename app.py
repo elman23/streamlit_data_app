@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # MongoDB Connection
-#MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://admin:adminpass@localhost:27017/")
 DB_NAME = os.getenv("DB_NAME", "streamlit_db")
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "user_inputs")
